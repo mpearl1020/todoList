@@ -1,0 +1,14 @@
+.button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  &:hover {
+    cursor: pointer;
+    opacity: 80%;
+  }
+  border: 1px solid black;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+  background-color: #4FCAEF;
+}

@@ -1,0 +1,76 @@
+.home-page {
+  display: flex;
+  background-size: cover;
+  background-image: url('../assets/office.jpg');
+  filter: blur(4px);
+  height: 92.5vh;
+  .login-button {
+    margin: 0 auto;
+    position: absolute;
+    left: 50%;
+    -ms-transform: translateX(-50%);
+    transform: translate(-50%);
+    background-color: #E93B6B;
+    color: white;
+    padding: 15px 30px;
+    text-align: center;
+  }
+
+  .content-container {
+    height: 100vh;
+    padding-left: 5vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .header-container {
+      font-family: 'Raleway', sans-serif;
+      .header {
+        font-weight: bold;
+        font-size: 1.5rem;
+        margin-bottom: .5rem;
+      }
+      .subtext {
+        margin-top: 0;
+      }
+    }
+    .form-container {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}
+
+.nav-bar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: right;
+  padding: 20px 70px;
+  width: 100vw;
+  height: 7.5vh;
+}
+
+.nav-bar {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: space-evenly;
+  height: 7.5vh;
+  .buttons-container {
+    position: absolute;
+    right: 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .button {
+      visibility: visible;
+      &:hover {
+      cursor: pointer;
+      opacity: 80%;
+      visibility: visible;
+      }
+  }
+  .title {
+    font-size: 30px;
+    flex-grow: 1;
+  }
+}
+}

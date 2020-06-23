@@ -1,60 +1,51 @@
 import React, { useState } from 'react';
-import Button from '@material-ui/core/Button';
+import { withRouter } from 'react-router-dom';
+import image from '../assets/office.jpg';
+import Modal from '../components/Modal';
+import SignInModal from '../components/SignInModal';
+import Text from '../components/Text';
 import TextField from '@material-ui/core/TextField';
-import banner from '../assets/banner.jpg';
-import './homepage.scss';
+import NavBar from '../components/NavBar';
+import LoginForm from '../components/LoginForm';
+import productivity from '../assets/productivity.png';
+import '../styles/homepage.scss';
 import firebase from '../firebase.js';
 
-export default function HomePage() {
+function HomePage(props) {
 
-  const offsetDate = new Date()
-  const offset = offsetDate.getTimezoneOffset()
-  const currDate = new Date(offsetDate.getTime() + (offset*60*1000))
+  const { history, username, setUsername } = props;
 
-  const [date, setDate] = useState(currDate.toISOString().split('T')[0]);
+  const [ loginOpen, setLoginOpen ] = useState(false);
+  const [ signInOpen, setSignInOpen ] = useState(false);
 
-  const handleDateChange = (e) => {
-    setDate(e.target.value)
+  const openLogin = (e) => {
+    
+    setLoginOpen(true);
   }
 
-  const addDate = () => {
-    const itemsRef = firebase.database().ref('items')
-    const newItem = {
-      text: 'testing',
-      date: date
-    }
-    itemsRef.push(newItem);
+  const closeLogin = (e) => {
+    setLoginOpen(false);
+  }
+
+  const openSignIn = (e) => {
+    setSignInOpen(true);
+  }
+
+  const closeSignIn = (e) => {
+    setSignInOpen(false);
   }
 
   return (
-    <div className="home-page">
-      <div className="banner-container">
-        <img src={banner} alt="Banner" className="banner" />
+    <div className='home'>
+      <div>
+        <NavBar openLogin={openLogin} openSignIn={openSignIn}/>
       </div>
-      <div className="content-container">
-        <div className="header-container">
-          <p className="header">A Day in the Life</p>
-          <p className="subtext">Experience the world as it used to be.</p>
-        </div>
-        <div className="form-container">
-          <TextField
-            id="date"
-            type="date"
-            className="date-picker"
-            value={date}
-            onChange={handleDateChange}
-          />
-          <Button 
-            className="go-btn"
-            variant="contained"
-            color="secondary"
-            onClick={addDate}
-          >
-            Go
-          </Button>
-        </div>
+      <div className='home-page'>
+        <Modal isOpen={loginOpen} onRequestClose={closeLogin} username={username} setUsername={setUsername}/>
+        <SignInModal isOpen={signInOpen} onRequestClose={closeSignIn}/>
       </div>
     </div>
   );
-
 }
+
+export default withRouter(HomePage);
