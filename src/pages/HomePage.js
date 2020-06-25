@@ -19,7 +19,7 @@ function HomePage(props) {
   const [ signInOpen, setSignInOpen ] = useState(false);
 
   const openLogin = (e) => {
-    
+
     setLoginOpen(true);
   }
 

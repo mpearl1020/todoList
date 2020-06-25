@@ -10,9 +10,7 @@ function LoginForm(props) {
 
   const { history, username, setUsername } = props;
 
-  // const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  // const [loggedIn, setLoggedIn] = useState('');
 
   const userChange = (e) => {
     setUsername(e.target.value);
@@ -27,6 +25,7 @@ function LoginForm(props) {
       if (snapshot.exists()) {
         const user = snapshot.val();
         const key = Object.keys(user);
+        // console.log(firebase.database().ref(key));
         if (user[key].password === password) {
           history.push('/dashboard');
         } else {

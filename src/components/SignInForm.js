@@ -28,12 +28,18 @@ function SignInForm(props) {
 
   const handleSubmit = () => {
     const userRef = firebase.database().ref('user');
-    const newAccount = {
-      username: username,
-      email: email,
-      password: password
-    }
-    userRef.push(newAccount);
+    userRef.orderByChild('username').equalTo(username).once('value', function(snapshot) {
+      if (snapshot.exists()) {
+        alert('User Already Exists');
+      } else {
+        const newAccount = {
+          username: username,
+          email: email,
+          password: password
+        }
+        userRef.push(newAccount);
+      }
+    });
   }
 
   return (
