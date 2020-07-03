@@ -1,3 +1,5 @@
+@import './variables.scss';
+
 .home-page {
   display: flex;
   background-size: cover;
@@ -10,7 +12,6 @@
     left: 50%;
     -ms-transform: translateX(-50%);
     transform: translate(-50%);
-    background-color: #E93B6B;
     color: white;
     padding: 15px 30px;
     text-align: center;
@@ -42,6 +43,14 @@
 
 .nav-bar-container {
   display: flex;
+  position: fixed;
+  position: sticky;
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: -ms-sticky;
+  position: -o-sticky;
+  top: 0;
+  left: 0;
   justify-content: space-between;
   align-items: right;
   padding: 20px 70px;
@@ -51,6 +60,12 @@
 
 .nav-bar {
   display: flex;
+  position: sticky;
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: -ms-sticky;
+  position: -o-sticky;
+  top: 0;
   flex-grow: 1;
   flex-direction: space-evenly;
   height: 7.5vh;

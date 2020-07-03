@@ -7,6 +7,8 @@ import Button from '../components/Button';
 import ItemForm from '../components/ItemForm';
 import AddItem from '../components/AddItem';
 import NavBar from '../components/DashboardNavBar';
+import AddModal from '../components/AddModal';
+import EditModal from '../components/EditModal';
 import image from '../assets/desk.jpg';
 import '../styles/homepage.scss';
 import '../styles/dashboard.scss';
@@ -14,7 +16,7 @@ import firebase from '../firebase.js';
 
 function DashboardPage(props) {
 
-  const { username } = props;
+  const { username, history } = props;
 
   const [selectedItem, setSelectedItem] = useState(-1);
 
@@ -23,7 +25,13 @@ function DashboardPage(props) {
 
   const [itemText, setItemText] = useState('');
   const [date, setDate] = useState(new Date());
+  const [completed, setCompleted] = useState(false);
   const [timeText, setTimeText] = useState('');
+  const [priority, setPriority] = useState(-1);
+
+  const [nameAsc, setNameAsc] = useState(true);
+  const [dateDesc, setDateDesc] = useState(true);
+  const [timeDesc, setTimeDesc] = useState(true);
 
   const [id, setId] = useState(0);
 
@@ -47,6 +55,11 @@ function DashboardPage(props) {
     setTimeText(e.target.value);
   }
 
+  const priortityChange = (e) => {
+    console.log(e.target.value);
+    setPriority(e.target.value);
+  }
+
   const changeAppear = (e) => {
     setAppear(true);
   }
@@ -56,105 +69,45 @@ function DashboardPage(props) {
     setSelectedItem(k);
   }
 
-  /*
-  const dummyToDoItems = [
-    {
-      id: 0,
-      title: "Math Homework",
-      completionDate: '2020-06-14',
-      completionTime: 1,
-      completed: false
-    },
-    {
-      id: 1,
-      title: "Science Homework",
-      completionDate: '2020-07-15',
-      completionTime: 2,
-      completed: false
-    },
-    {
-      id: 2,
-      title: "Lit Homework",
-      completionDate: '2020-08-03',
-      completionTime: 1,
-      completed: true
-    },
-  ]
-  */
-
-  const markCompleted = (k, setter) => {
+  const markCompleted = (k) => {
     firebase.database().ref(`todos/${username}/${k}`).update({
       completed: true
     });
-    setter(true);
-  }
-
-  const markIncomplete = (k, setter) => {
-    firebase.database().ref(`todos/${username}/${k}`).update({
-      completed: false
-    });
-    setter(false);
-  }
-
-  // console.log([...Object.entries(items)]);
-  // console.log([...Object.entries(items)[0]]) // key
-
-  // pass firebase key to component
-  const removeItem = (k) => {
-    firebase.database().ref(`todos/${username}/${k}`).remove();
-    // setItems([...Object.entries(items).filter(todo => todo[0] !== k)])
-    // console.log(items);
+    setCompleted(true);
     firebase.database().ref(`todos/${username}`).once('value').then((snapshot) => {
       setItems(snapshot.val());
     });
-    // setItems([...Object.entries(items).filter(todo => todo['id'] !== k)]);
-    /*
-    console.log(firebase.database().ref('todos').orderByChild(`${username}`));
-    firebase.database().ref('todos').orderByChild(`${username}`).on('value', function(snapshot) {
-      const todoList = snapshot.val();
-      console.log(todoList);
-      const key = Object.keys(todoList);
-      console.log(key);
+  }
+
+  const markIncomplete = (k) => {
+    firebase.database().ref(`todos/${username}/${k}`).update({
+      completed: false
     });
-    */
-
+    setCompleted(false);
+    firebase.database().ref(`todos/${username}`).once('value').then((snapshot) => {
+      setItems(snapshot.val());
+    });
   }
 
-  /*
-  const editItem = (k) => {
-    console.log('date ' + date);
-    for (var i = 0; i < items.length; i++) {
-      if (items[i]['id'] == k) {
-        items[i].title = itemText;
-        items[i].completionTime = timeText;
-        items[i].completionDate = date.toISOString().split('T')[0];
-      }
-    }
+  const removeItem = (k) => {
+    firebase.database().ref(`todos/${username}/${k}`).remove();
+    firebase.database().ref(`todos/${username}`).once('value').then((snapshot) => {
+      setItems(snapshot.val());
+    });
   }
-  */
 
   const editItem = (k) => {
-    // console.log(k);
     firebase.database().ref(`todos/${username}/${k}`).update({
       completionDate: date.toISOString().split('T')[0],
       completionTime: timeText,
       title: itemText
     });
-
     firebase.database().ref(`todos/${username}`).once('value').then((snapshot) => {
       setItems(snapshot.val());
     });
-    // dateSet(date.toISOString().split('T')[0]);
-    // timeSet(timeText);
-    // titleSet(itemText);
   }
 
   const toDoComponents = items && Object.entries(items).map(([inx, obj]) => {
-    // const entries = Object.entries(items);
-    // console.log(inx); // firebase key
-    // console.log(obj);
-    // console.log(inx);
-    // console.log(firebase.database().ref)
     return (
         <ToDoItem removeItem={removeItem}
           markCompleted={markCompleted}
@@ -186,11 +139,8 @@ function DashboardPage(props) {
     todoRef.push(newItem);
     firebase.database().ref(`todos/${username}`).once('value').then((snapshot) => {
       setItems(snapshot.val());
-      // console.log(snapshot.val());
     });
   }
-
-  // -MAXrzUm4DCGDhJDPTK8
 
   const closeAdd = (e) => {
     setAppear(false);
@@ -200,35 +150,67 @@ function DashboardPage(props) {
     setEditAppear(false);
   }
 
-  // firebase.database().ref(`todos/${username}/${k}`).remove();
-  // setItems([...Object.entries(items).filter(todo => todo['id'] !== k)]);
+  const nameSort = (e) => {
+    const entries = Object.entries(items);
+    var sorted = null;
+    if (nameAsc) {
+      sorted = entries.sort((a, b) => (a[1].title > b[1].title) ? 1 : ((b[1].title > a[1].title) ? -1 : 0));
+      setNameAsc(false);
+    } else {
+      sorted = entries.sort((a, b) => (a[1].title > b[1].title) ? -1 : ((b[1].title > a[1].title) ? 1 : 0));
+      setNameAsc(true);
+    }
+    setItems(Object.fromEntries(sorted));
+  }
+
+  const dateSort = (e) => {
+    const entries = Object.entries(items);
+    var sorted = null;
+    if (dateDesc) {
+      sorted = entries.sort((a, b) => Date.parse(b[1].completionDate) - Date.parse(a[1].completionDate));
+      setDateDesc(false);
+    } else {
+      sorted = entries.sort((a, b) => Date.parse(a[1].completionDate) - Date.parse(b[1].completionDate));
+      setDateDesc(true);
+    }
+    setItems(Object.fromEntries(sorted));
+  }
+
+
+  const timeSort = (e) => {
+    const entries = Object.entries(items);
+    var sorted = null;
+    if (timeDesc) {
+      sorted = entries.sort((a, b) => parseFloat(b[1].completionTime) - parseFloat(a[1].completionTime));
+      setTimeDesc(false);
+    } else {
+      sorted = entries.sort((a, b) => parseFloat(a[1].completionTime) - parseFloat(b[1].completionTime));
+      setTimeDesc(true);
+    }
+    setItems(Object.fromEntries(sorted));
+  }
+
+  const completedSort = (e) => {
+    const entries = Object.entries(items);
+    const sorted = entries.sort((a, b) => (+b[1].completed) - (+a[1].completed));
+    setItems(Object.fromEntries(sorted));
+  }
 
   const logout = (e) => {
-    console.log('logging out');
-    console.log([...Object.entries(items)]);
-    console.log([...Object.entries(items)[0]]) // key
-
-    /*
-    const t = firebase.database().reference().child
-    firebase.database().ref(`todos/${username}/-MAXrzUm4DCGDhJDPTK8`).on('value').then((snapshot) => {
-      snapshot.ref().remove();
-    })
-    */
-    // const key = '-MAXrzUm4DCGDhJDPTK8';
-    // firebase.database().ref(`todos/${username}/${key}`).remove();
+    history.push('/');
   }
 
   return (
     <div className='dashboard'>
       <div>
-        <NavBar username={username} logout={logout} changeAppear={ changeAppear }/>
+        <NavBar username={username} logout={logout} changeAppear={changeAppear} nameSort={nameSort} timeSort={timeSort} dateSort={dateSort} nameAsc={nameAsc} timeDesc={timeDesc} dateDesc={dateDesc} completedSort={completedSort}/>
       </div>
       <div className='dashboard-page'>
         <div className='todo-container'>
-          <p>{ toDoComponents }</p>
+          <div>{ toDoComponents }</div>
         </div>
-        { appear && <ItemForm submitLabel='Add New Task' onClick={closeAdd} itemText={itemText} date={date} timeText={timeText} itemChange={itemChange} dateChange={dateChange} timeChange={timeChange} ph='New Task' handleSubmit={addItem}/> }
-        { editAppear && <ItemForm submitLabel='Apply Changes' onClick={closeEdit} itemText={itemText} dateText={date} timeText={timeText} itemChange={itemChange} dateChange={dateChange} timeChange={timeChange} ph='Edit Task' handleSubmit={() => editItem(selectedItem)}/>}
+        <AddModal isOpen={appear} submitLabel='Add New Task' onRequestClose={closeAdd} itemText={itemText} date={date} timeText={timeText} itemChange={itemChange} dateChange={dateChange} timeChange={timeChange} ph='New Task' handleSubmit={addItem}/>
+        <EditModal isOpen={editAppear} submitLabel='Apply Changes' onRequestClose={closeEdit} itemText={itemText} dateText={date} timeText={timeText} itemChange={itemChange} dateChange={dateChange} timeChange={timeChange} ph='Edit Task' handleSubmit={() => editItem(selectedItem)}/>
       </div>
     </div>
   )

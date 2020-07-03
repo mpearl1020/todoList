@@ -9,8 +9,6 @@ import firebase from '../firebase.js';
 export default ({ isOpen, onRequestClose, username, setUsername }) =>
 
 {
-  console.log(username);
-  console.log(setUsername);
   return (
     <Modal
       isOpen={isOpen}
@@ -27,7 +25,7 @@ export default ({ isOpen, onRequestClose, username, setUsername }) =>
       }}
       shouldCloseOnOverlayClick={true}
       closeTimeoutMS={2000}>
-      <LoginForm username={username} setUsername={setUsername}/>
+      <LoginForm username={username} setUsername={setUsername} onRequestClose={onRequestClose}/>
     </Modal>
   )
 }

@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 import ItemForm from '../components/ItemForm';
 import '../styles/login.scss';
 
-export default ({ isOpen, onRequestClose }) =>
+export default ({ isOpen, onRequestClose, submitLabel, itemText, date, timeText, itemChange, dateChange, timeChange, ph, handleSubmit }) =>
 
   <Modal
     isOpen={isOpen}
@@ -20,5 +20,5 @@ export default ({ isOpen, onRequestClose }) =>
     }}
     shouldCloseOnOverlayClick={true}
     closeTimeoutMS={2000}>
-    <ItemForm/>
+    <ItemForm onRequestClose={onRequestClose} submitLabel={submitLabel} itemText={itemText} date={date} timeText={timeText} itemChange={itemChange} dateChange={dateChange} timeChange={timeChange} ph='New Task' handleSubmit={handleSubmit}/>
   </Modal>

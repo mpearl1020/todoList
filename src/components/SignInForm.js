@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import '../styles/text.scss';
 import '../styles/login.scss';
 import { withRouter } from 'react-router-dom';
+import { MDBIcon } from 'mdbreact';
 import Button from '../components/Button';
 import Text from '../components/Text';
 import firebase from '../firebase.js';
 
 function SignInForm(props) {
 
-  const { history } = props;
+  const { history, onRequestClose } = props;
 
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
@@ -48,7 +49,10 @@ function SignInForm(props) {
       <input className='text-container' type='text' value={email} onChange={emailChange} placeholder='Email'></input>
       <input className='text-container' type='password' value={password} onChange={passChange} placeholder='Password'></input>
       <input className='text-container' type='text' value={username} onChange={userChange} placeholder='Make a Username'></input>
-      <Button label='Sign Up' onClick={handleSubmit}/>
+      <div className='row-button-container'>
+        <Button label='Sign Up' onClick={handleSubmit}/>
+        <Button label='Close' onClick={onRequestClose}/>
+      </div>
     </div>
   )
 }

@@ -12,7 +12,6 @@ export default function Text(props) {
 
 
   const onChange = (e) => {
-    console.log(e.target.value);
     setCurrText(e.target.value);
   }
 

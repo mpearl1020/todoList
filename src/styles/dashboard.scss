@@ -1,91 +1,115 @@
+@import './variables.scss';
+
 .dashboard-page {
   display: flex;
-  .banner-container {
-    width: 100%;
-    height: 100%;
-    .banner {
-      background-size: cover;
-    }
-  }
+  background-size: cover;
+  background-image: url('../assets/texture.jpg');
+  background-repeat: repeat-y;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  min-height: 92.5vh;
 
-  .tool-bar {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-  }
-
-  .todo-list-container {
-    display: grid;
-    grid-template-rows: auto auto;
-    width: auto;
-  }
-
-  .todo-list-item-container {
+  .content-container {
+    height: 100vh;
+    padding-left: 5vw;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    text-align: center;
-    background-color: white;
-    border-style: solid;
-    border-radius: 5px;
-    width: 300px;
-    height: 400px;
-    padding-left: 20px;
-    padding-right: 20px;
-    .buttons-container {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-evenly;
-      text-align: center;
-      font-size: 30px;
-      .button {
-        visibility: visible;
-        &:hover {
-        cursor: pointer;
-        opacity: 80%;
-        visibility: visible;
-        }
+    justify-content: center;
+    .header-container {
+      font-family: 'Raleway', sans-serif;
+      .header {
+        font-weight: bold;
+        font-size: 1.5rem;
+        margin-bottom: .5rem;
+      }
+      .subtext {
+        margin-top: 0;
+      }
     }
-    .title {
-      font-size: 100px;
-      font-weight: bold;
+    .form-container {
+      display: flex;
+      justify-content: space-between;
     }
   }
 }
 
-.form-box{
+.tool-bar {
   display: flex;
   flex-direction: row;
+  justify-content: flex-end;
+}
+
+.todo-list-container {
+  display: grid;
+  grid-template-rows: auto auto;
+  width: auto;
+}
+
+.todo-list-item-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  text-align: center;
+  background-color: white;
+  border-style: solid;
+  border-radius: 5px;
+  width: 300px;
+  height: 400px;
+  padding-left: 20px;
+  padding-right: 20px;
+  .buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    text-align: center;
+    font-size: 30px;
+    .button {
+      visibility: visible;
+      &:hover {
+      cursor: pointer;
+      opacity: 80%;
+      visibility: visible;
+      }
+  }
+  .title {
+    font-size: 100px;
+    font-weight: bold;
+  }
+}
+}
+
+.form-box{
+display: flex;
+flex-direction: row;
+justify-content: space-evenly;
+background-color: white;
+border-style: solid;
+border-radius: 5px;
+align-items: flex-start;
+.item-form-container {
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+  width: 300px;
+  height: 400px;
+  margin: auto;
+}
+}
+
+.add-item {
+.container {
+  display: flex;
+  flex-direction: column;
   justify-content: space-evenly;
   background-color: white;
   border-style: solid;
   border-radius: 5px;
-  align-items: flex-start;
-  .item-form-container {
-    display: flex;
-    justify-content: space-evenly;
-    text-align: center;
-    width: 300px;
-    height: 400px;
-    margin: auto;
-  }
-}
-
-.add-item {
-  .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    background-color: white;
-    border-style: solid;
-    border-radius: 5px;
-    width: 300px;
-    height: 400px;
-    text-align: center;
-    &:hover {
-      cursor: pointer;
-      opacity: 80%;
-    }
+  width: 300px;
+  height: 400px;
+  text-align: center;
+  &:hover {
+    cursor: pointer;
+    opacity: 80%;
   }
 }
 }
@@ -103,12 +127,16 @@
   width: 40vw;
   background-color: white;
   border-radius: 5px;
-  box-shadow: 0px 0px 10px  rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 10px  $shadow;
   .title {
+    display: flex;
     position: relative;
     font-size: 20px;
     padding-right: 80px;
     transition: all 0.8s ease;
+    &:hover {
+      cursor: pointer;
+    }
   }
   .title::after {
     content: '';
@@ -123,6 +151,9 @@
     background-size: contain;
     background-repeat: no-repeat;
     transition: all 0.8s ease;
+    &:hover {
+      cursor: pointer;
+    }
   }
   .info {
     opacity: 1;
@@ -153,13 +184,16 @@
   width: 40vw;
   background-color: white;
   border-radius: 5px;
-  box-shadow: 0px 0px 10px  rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 10px  $shadow;
   .title {
     position: relative;
     font-size: 20px;
     padding-right: 80px;
     transition: all 0.8s ease;
     margin-bottom: 15px;
+    &:hover {
+      cursor: pointer;
+    }
   }
   .title::after {
     content: '';
@@ -175,6 +209,9 @@
     background-repeat: no-repeat;
     transition: all 0.8s ease;
     transform: translateY(-50%) rotate(180deg);
+    &:hover {
+      cursor: pointer;
+    }
   }
   .info {
     opacity: 1;

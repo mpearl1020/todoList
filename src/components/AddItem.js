@@ -7,10 +7,12 @@ import '../styles/dashboard.scss';
 
 export default function AddItem(props) {
 
+  const {onClick} = props;
+
   return (
     <div className='add-item'>
       <div className='container'>
-        <AddIcon style={{ fontSize: 200 }} onClick={props.onClick}/>
+        <AddIcon style={{ fontSize: 200 }} onClick={onClick}/>
       </div>
     </div>
   )

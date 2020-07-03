@@ -1,12 +1,9 @@
 import React from 'react';
 import Modal from 'react-modal';
-import Button from '../components/Button';
-import SignInForm from '../components/SignInForm';
-import { withRouter } from 'react-router-dom';
+import ItemForm from '../components/ItemForm';
 import '../styles/login.scss';
-import firebase from '../firebase.js';
 
-export default ({ isOpen, onRequestClose }) =>
+export default ({ isOpen, onRequestClose, submitLabel, itemText, date, timeText, itemChange, dateChange, timeChange, ph, handleSubmit }) =>
 
   <Modal
     isOpen={isOpen}
@@ -23,5 +20,5 @@ export default ({ isOpen, onRequestClose }) =>
     }}
     shouldCloseOnOverlayClick={true}
     closeTimeoutMS={2000}>
-    <SignInForm onRequestClose={onRequestClose}/>
+    <ItemForm onRequestClose={onRequestClose} submitLabel='Apply Changes' itemText={itemText} dateText={date} timeText={timeText} itemChange={itemChange} dateChange={dateChange} timeChange={timeChange} ph='Edit Task' handleSubmit={handleSubmit}/>
   </Modal>

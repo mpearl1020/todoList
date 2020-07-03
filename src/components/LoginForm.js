@@ -8,7 +8,7 @@ import firebase from '../firebase.js';
 
 function LoginForm(props) {
 
-  const { history, username, setUsername } = props;
+  const { history, username, setUsername, onRequestClose } = props;
 
   const [password, setPassword] = useState('');
 
@@ -25,7 +25,6 @@ function LoginForm(props) {
       if (snapshot.exists()) {
         const user = snapshot.val();
         const key = Object.keys(user);
-        // console.log(firebase.database().ref(key));
         if (user[key].password === password) {
           history.push('/dashboard');
         } else {
@@ -42,7 +41,10 @@ function LoginForm(props) {
       <label className='text'>Your To Do List</label>
       <input className='text-container' type='text' value={username} onChange={userChange} placeholder='Username'></input>
       <input className='text-container' type='password' value={password} onChange={passChange} placeholder='Password'></input>
-      <Button label='Login' onClick={handleSubmit}/>
+      <div className='row-button-container'>
+        <Button label='Login' onClick={handleSubmit}/>
+        <Button label='Close' onClick={onRequestClose}/>
+      </div>
     </div>
   )
 }

@@ -1,7 +1,17 @@
+@import './variables.scss';
+
 .button-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+  justify-content: center;
+  font-size: 16px;
+  width: 100px;
   &:hover {
     cursor: pointer;
     opacity: 80%;
@@ -9,6 +19,7 @@
   border: 1px solid black;
   border-radius: 5px;
   color: white;
+  align-items: center;
   text-align: center;
-  background-color: #4FCAEF;
+  background-color: $theme-blue;
 }
