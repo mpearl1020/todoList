@@ -10,7 +10,7 @@
     "jquery": "^3.5.1",
     "material-tooltip": "^1.0.1",
     "mdbreact": "^4.27.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "react": "^16.8.6",
     "react-bootstrap-validation": "^0.1.11",
     "react-datepicker": "^3.0.0",
